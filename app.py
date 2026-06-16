@@ -1,16 +1,31 @@
 # =============================================================================
 # Monica's Digital Twin — RAG-Powered Gradio App
 # =============================================================================
-# Pipeline overview (run once at startup):
-#   1. Chunk        — split source documents into overlapping text windows
-#   2. Embed        — convert chunks to vectors via OpenAI Embeddings
-#   3. Store        — persist vectors + metadata in ChromaDB
+# Startup — runs once when the app launches:
+#   1. Configure       — load .env vars, validate API keys, set model and
+#                         ChromaDB constants
+#   2. Load sources     — pull Monica's documents from a private Hugging
+#                         Face dataset
+#   3. Define persona   — build the system prompt (voice, behavioral
+#                         constraints, and the *** delimited fact sheet)
+#   4. Init tools       — register the send_notification (Pushover) and
+#                         roll_dice function-calling tools for the LLM
+#   5. Chunk            — split each document into overlapping, boundary-
+#                         aware text windows
+#   6. Embed            — convert chunks to vectors via OpenAI Embeddings
+#   7. Store            — persist vectors + metadata in a ChromaDB collection
+#   8. Launch UI        — start the Gradio ChatInterface
 #
-# Per-message query flow:
-#   4. Embed query  — convert the user's question to a vector
-#   5. Retrieve     — fetch the top-k most relevant chunks from ChromaDB
-#   6. Assemble     — concatenate chunks into a single context string
-#   7. Generate     — inject context into the system prompt and call the LLM
+# Per-message query flow — runs once per chat turn:
+#   9.  Embed query     — convert the user's question to a vector
+#   10. Retrieve        — fetch the top-k most relevant chunks from ChromaDB
+#   11. Assemble        — concatenate chunks into a single context string
+#   12. Generate        — inject context into the system prompt and call
+#                         the LLM
+#   13. Handle tools    — if the LLM requests a tool call, execute it (send
+#                         a Pushover notification or roll a die), feed the
+#                         result back to the LLM, and repeat until it
+#                         returns a final text answer
 # =============================================================================
 
 
