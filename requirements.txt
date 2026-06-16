@@ -1,0 +1,8 @@
+gradio==6.18.0
+numpy==2.4.6
+chromadb==1.5.9
+requests==2.34.2
+openai==2.41.1
+datasets==5.0.0
+huggingface_hub==1.19.0
+python-dotenv==1.2.2
