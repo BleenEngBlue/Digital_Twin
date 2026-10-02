@@ -1,5 +1,6 @@
 data.txt
 .env
+.venv/
 results.json
 __pycache__/
 .history/
