@@ -1,0 +1,7 @@
+data.txt
+.env
+results.json
+__pycache__/
+.history/
+.claude/
+
